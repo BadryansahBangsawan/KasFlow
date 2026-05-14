@@ -1,0 +1,3 @@
+{
+  "extends": "@KasFlow/config/tsconfig.base.json"
+}

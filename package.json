@@ -1,0 +1,48 @@
+{
+  "name": "KasFlow",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "dotenv": "^17.2.2",
+      "zod": "^4.1.13",
+      "typescript": "^6",
+      "@types/bun": "^1.3.4",
+      "hono": "^4.8.2",
+      "@trpc/server": "^11.16.0",
+      "better-auth": "1.6.9",
+      "next-themes": "^0.4.6",
+      "@trpc/client": "^11.16.0",
+      "@types/react-dom": "^19.2.3"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --filter '*' dev",
+    "build": "bun run --filter '*' build",
+    "check-types": "bun run --filter '*' check-types",
+    "dev:web": "bun run --filter web dev",
+    "dev:server": "bun run --filter server dev",
+    "db:push": "bun run --filter @KasFlow/db db:push",
+    "db:studio": "bun run --filter @KasFlow/db db:studio",
+    "db:generate": "bun run --filter @KasFlow/db db:generate",
+    "db:migrate": "bun run --filter @KasFlow/db db:migrate",
+    "db:local": "bun run --filter @KasFlow/db db:local",
+    "check": "biome check --write ."
+  },
+  "dependencies": {
+    "@KasFlow/env": "workspace:*",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@KasFlow/config": "workspace:*",
+    "@biomejs/biome": "^2.2.0",
+    "@types/bun": "catalog:",
+    "typescript": "catalog:"
+  },
+  "packageManager": "bun@1.3.12"
+}
