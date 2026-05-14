@@ -1,0 +1,1 @@
+bun create better-t-stack@latest KasFlow --frontend tanstack-router --backend hono --runtime bun --api trpc --auth better-auth --payments none --database sqlite --orm drizzle --db-setup none --package-manager bun --git --web-deploy none --server-deploy none --install --addons biome --examples none
