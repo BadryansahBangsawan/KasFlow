@@ -5,7 +5,7 @@ import DownloadButton, {
 import { ProgressIndicator } from "@KasFlow/ui/components/progress-indicator";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
-import { AlertCircle, FileText, UploadCloud } from "lucide-react";
+import { AlertCircle, FileText, Sparkles, UploadCloud } from "lucide-react";
 import { useState } from "react";
 
 import { authClient } from "@/lib/auth-client";
@@ -29,6 +29,9 @@ export const Route = createFileRoute("/imports/$importId")({
 function RouteComponent() {
 	const { importId } = Route.useParams();
 	const detail = useQuery(trpc.imports.byId.queryOptions({ id: importId }));
+	const analysis = useQuery(
+		trpc.analysis.byImportId.queryOptions({ importId }),
+	);
 	const [downloadStatus, setDownloadStatus] = useState<DownloadStatus>("idle");
 	const [downloadProgress, setDownloadProgress] = useState(0);
 
@@ -51,7 +54,8 @@ function RouteComponent() {
 	const statementImport = detail.data.import;
 	const transactions = detail.data.transactions;
 	const currentStep =
-		statementImport.status === "parsed"
+		statementImport.status === "parsed" ||
+		statementImport.status === "completed"
 			? 4
 			: statementImport.status === "failed"
 				? 2
@@ -70,12 +74,22 @@ function RouteComponent() {
 						{statementImport.importConfidence}%.
 					</p>
 				</div>
-				<Link to="/imports/new">
-					<Button variant="outline" className="rounded-full">
-						<UploadCloud className="size-4" />
-						Upload lagi
-					</Button>
-				</Link>
+				<div className="flex items-center gap-3">
+					{statementImport.totalTransactions > 0 && (
+						<Link to="/reports/$importId" params={{ importId }}>
+							<Button variant="outline" className="rounded-full">
+								<Sparkles className="size-4" />
+								{analysis.data?.report ? "Lihat report" : "Analisis AI"}
+							</Button>
+						</Link>
+					)}
+					<Link to="/imports/new">
+						<Button variant="outline" className="rounded-full">
+							<UploadCloud className="size-4" />
+							Upload lagi
+						</Button>
+					</Link>
+				</div>
 			</div>
 
 			{statementImport.errorMessage && (
@@ -149,8 +163,8 @@ function RouteComponent() {
 				<div className="border-b p-5">
 					<h2 className="font-semibold">Transaksi hasil parser</h2>
 					<p className="mt-1 text-muted-foreground text-sm">
-						AI analysis belum dikerjakan di fase ini. Tahap ini fokus parsing
-						dan review transaksi.
+						Daftar transaksi yang berhasil dibaca dari PDF. Klik "Analisis AI"
+						untuk mendapatkan insight otomatis.
 					</p>
 				</div>
 				{transactions.length ? (

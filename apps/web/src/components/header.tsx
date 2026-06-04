@@ -10,6 +10,7 @@ import {
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
 	ArrowRight,
+	BarChart3,
 	Home,
 	LayoutDashboard,
 	LogIn,
@@ -125,10 +126,10 @@ export default function Header() {
 					onSelect: () => goTo("/imports/new"),
 				},
 				{
-					id: "landing",
-					label: "Landing",
-					active: pathname === "/",
-					onSelect: () => goTo("/"),
+					id: "reports",
+					label: "Reports",
+					active: pathname.startsWith("/reports"),
+					onSelect: () => goTo("/dashboard"),
 				},
 			]
 		: publicSections.map((section) => ({
@@ -145,12 +146,6 @@ export default function Header() {
 	const mobileItems: InteractiveMenuItem[] = session
 		? [
 				{
-					label: "Home",
-					icon: Home,
-					active: pathname === "/",
-					onClick: () => goTo("/"),
-				},
-				{
 					label: "Dashboard",
 					icon: LayoutDashboard,
 					active: pathname === "/dashboard",
@@ -161,6 +156,12 @@ export default function Header() {
 					icon: UploadCloud,
 					active: pathname.startsWith("/imports"),
 					onClick: () => goTo("/imports/new"),
+				},
+				{
+					label: "Reports",
+					icon: BarChart3,
+					active: pathname.startsWith("/reports"),
+					onClick: () => goTo("/dashboard"),
 				},
 			]
 		: [

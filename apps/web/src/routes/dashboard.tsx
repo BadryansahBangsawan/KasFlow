@@ -1,7 +1,7 @@
 import { Button } from "@KasFlow/ui/components/button";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
-import { FileText, UploadCloud } from "lucide-react";
+import { FileText, Sparkles, UploadCloud } from "lucide-react";
 
 import { authClient } from "@/lib/auth-client";
 import { trpc } from "@/utils/trpc";
@@ -25,6 +25,12 @@ function RouteComponent() {
 	const { session } = Route.useRouteContext();
 	const imports = useQuery(trpc.imports.list.queryOptions());
 	const latestImport = imports.data?.[0];
+	const latestAnalysis = useQuery(
+		trpc.analysis.byImportId.queryOptions(
+			{ importId: latestImport?.id ?? "" },
+			{ enabled: !!latestImport?.id },
+		),
+	);
 
 	return (
 		<main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6">
@@ -37,12 +43,25 @@ function RouteComponent() {
 						Dashboard KasFlow
 					</h1>
 				</div>
-				<Link to="/imports/new">
-					<Button className="rounded-full">
-						<UploadCloud className="size-4" />
-						Upload laporan BCA
-					</Button>
-				</Link>
+				<div className="flex items-center gap-3">
+					{latestImport && (
+						<Link
+							to="/reports/$importId"
+							params={{ importId: latestImport.id }}
+						>
+							<Button variant="outline" className="rounded-full">
+								<Sparkles className="size-4" />
+								{latestAnalysis.data?.report ? "Lihat report" : "Analisis AI"}
+							</Button>
+						</Link>
+					)}
+					<Link to="/imports/new">
+						<Button className="rounded-full">
+							<UploadCloud className="size-4" />
+							Upload laporan BCA
+						</Button>
+					</Link>
+				</div>
 			</div>
 
 			<section className="grid gap-4 md:grid-cols-4">
