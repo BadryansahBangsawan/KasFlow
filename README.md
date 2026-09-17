@@ -26,6 +26,22 @@ First, install the dependencies:
 bun install
 ```
 
+## Environment Variables
+
+Copy the example env file and fill in your values before running the dev server:
+
+```bash
+cp apps/server/.env.example apps/server/.env
+```
+
+Key variables in `apps/server/.env`:
+
+| Variable | Description |
+|---|---|
+| `DATABASE_URL` | SQLite file path (e.g. `file:./local.db`) or Turso connection string |
+| `BETTER_AUTH_SECRET` | Random secret for session signing — generate with `openssl rand -hex 32` |
+| `BETTER_AUTH_URL` | Base URL your auth callbacks resolve to (e.g. `http://localhost:3000`) |
+
 ## Database Setup
 
 This project uses SQLite with Drizzle ORM.
