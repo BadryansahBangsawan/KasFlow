@@ -126,3 +126,27 @@ KasFlow/
 - `bun run db:studio`: Open database studio UI
 - `bun run db:local`: Start the local SQLite database
 - `bun run check`: Run Biome formatting and linting
+
+## Deployment
+
+Build both apps before deploying:
+
+```bash
+bun run build
+```
+
+**Server** — the Hono API compiles to a single Node-compatible bundle in `apps/server/dist`. Run it with:
+
+```bash
+node apps/server/dist/index.js
+```
+
+Set `NODE_ENV=production` and ensure all environment variables from `apps/server/.env.example` are set in your production environment before starting.
+
+**Web** — the React frontend compiles to static files in `apps/web/dist`. Serve with any static host (Vercel, Cloudflare Pages, Netlify, or a plain `serve` command):
+
+```bash
+bunx serve apps/web/dist
+```
+
+Point your reverse proxy at the server port (default `3000`) and the web dist directory (or CDN). Make sure `BETTER_AUTH_URL` matches the public domain your server is reachable at.
