@@ -120,6 +120,23 @@ KasFlow/
 │   └── db/          # Database schema & queries
 ```
 
+## Data Flow
+
+A typical tRPC request follows this path:
+
+```
+Browser (apps/web)
+  └─ TanStack Router page renders
+       └─ trpc.transaction.list.useQuery()   ← packages/api router
+            └─ Hono handler (apps/server)
+                 └─ Drizzle query (packages/db)
+                      └─ SQLite / Turso
+```
+
+- **`packages/api`** defines all tRPC routers and input/output schemas — the single source of truth for types shared between web and server.
+- **`packages/db`** owns the Drizzle schema (`schema.ts`) and all query helpers; no raw SQL in `apps/`.
+- **`packages/auth`** exposes the Better-Auth instance; import from here rather than re-initialising in multiple packages.
+
 ## Available Scripts
 
 - `bun run dev`: Start all applications in development mode
