@@ -154,6 +154,8 @@ Browser (apps/web)
 - `bun run db:local`: Start the local SQLite database
 - `bun run check`: Run Biome formatting and linting
 
+Prefer `bun run db:studio` from the monorepo root over calling `drizzle-kit` inside a package — the root script routes through `@KasFlow/db` so workspace paths stay correct.
+
 ## Deployment
 
 Build both apps before deploying:
