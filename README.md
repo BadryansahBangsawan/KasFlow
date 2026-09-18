@@ -105,6 +105,7 @@ If you want to add app-specific blocks instead of shared primitives, run the sha
 ## Git Hooks and Formatting
 
 - Format and lint fix: `bun run check`
+- Run `bun run check` before committing so Biome formatting matches CI; otherwise PRs often fail on whitespace-only diffs.
 
 ## Project Structure
 
