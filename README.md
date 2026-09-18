@@ -46,6 +46,8 @@ Key variables in `apps/server/.env`:
 
 This project uses SQLite with Drizzle ORM.
 
+After `bun run db:push`, you can inspect tables visually with Drizzle Studio (`bunx drizzle-kit studio` from `apps/server`) when debugging schema mismatches — handy before writing seed data by hand.
+
 1. Start the local SQLite database (optional):
 
 ```bash
