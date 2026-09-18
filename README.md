@@ -157,3 +157,5 @@ bunx serve apps/web/dist
 ```
 
 Point your reverse proxy at the server port (default `3000`) and the web dist directory (or CDN). Make sure `BETTER_AUTH_URL` matches the public domain your server is reachable at.
+
+**Turso (remote SQLite)** — to use Turso instead of a local SQLite file, set `DATABASE_URL` to your Turso database URL (`libsql://your-db-name.turso.io`) and add `TURSO_AUTH_TOKEN` to the env. The local `bun run db:local` script is only needed for the embedded file-based mode.
