@@ -100,7 +100,7 @@ If you want to add app-specific blocks instead of shared primitives, run the sha
 ## Troubleshooting
 
 - **Auth errors on first run** — confirm `BETTER_AUTH_SECRET` is set in `apps/server/.env`. Generate one with `openssl rand -hex 32` if empty.
-- **tRPC type errors after adding a new route** — run `bun run check-types` from the root; the shared `packages/api` types must be rebuilt before the web app picks them up.
+- **tRPC type errors after adding a new route** — run `bun run check-types` from the root; the shared `packages/api` types must be rebuilt before the web app picks them up. If the client still shows old types after rebuilding, restart the TypeScript server in your editor (`TypeScript: Restart TS Server`) to flush the stale cache.
 - **Port already in use** — the web app defaults to `:5173` and the server to `:3000`. Kill any leftover processes with `lsof -ti:5173,3000 | xargs kill` before restarting.
 - **SQLite write contention in production** — enable WAL mode for better concurrent read/write performance. Run `PRAGMA journal_mode=WAL;` once on your database file, or set it in Drizzle's connection options. Without this, heavy read traffic can block writes.
 
