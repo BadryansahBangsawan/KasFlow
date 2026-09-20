@@ -70,6 +70,7 @@ bun run dev
 
 Open [http://localhost:5173](http://localhost:5173) in your browser to see the web application.
 The API is running at [http://localhost:3000](http://localhost:3000).
+If the web page loads but API calls fail, confirm both `bun run dev` processes are up — the Vite app on 5173 proxies tRPC to the Hono server on 3000.
 
 ## UI Customization
 
